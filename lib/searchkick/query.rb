@@ -1048,6 +1048,8 @@ module Searchkick
         end
 
         {regexp: {field => {value: source, flags: "NONE"}}}
+      elsif value.is_a?(String) && value[0] == '"' && value[-1] == '"'
+        {match_phrase: {field => {query: value[1..-2]}}}
       else
         # TODO add this for other values
         if value.as_json.is_a?(Enumerable)
